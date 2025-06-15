@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Solutions Overview - Nambri Technologies</title>
+    <link rel="icon" type="image/x-icon" href="https://images.squarespace-cdn.com/content/v1/5e2c8b1d7584647062207074/da05e036-edb7-410f-b886-4ad8ac36b606/favicon.ico?format=100w">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Navigation */
+        .nav {
+            background-color: #0b0829;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .nav-logo img { width: 110px; height: 90px; }
+        .nav-menu { list-style: none; padding: 0; margin: 0; }
+        .nav-menu .desktop-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        .nav-menu .desktop-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .desktop-menu {
+            display: flex;
+            gap: 2rem;
+            background-color: #0b0829;
+            border-radius: 15px;
+            padding: 0.5rem 1rem;
+            list-style: none;
+            align-items: center;
+            position: relative;
+        }
+
+        .desktop-menu li {
+            position: relative;
+        }
+
+        .desktop-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            display: block;
+        }
+
+        .desktop-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .desktop-menu .dropdown-content,
+        .desktop-menu .dropdown-content-login {
+            display: none;
+            position: absolute;
+            top: 110%;
+            left: 0;
+            background: #fff;
+            color: #0b0829;
+            border-radius: 10px;
+            padding: 1rem;
+            z-index: 1001;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .desktop-menu .dropdown-content {
+            min-width: 720px;
+        }
+        .desktop-menu .dropdown-content-login {
+            min-width: 80px;
+        }
+        .desktop-menu .dropdown-content .dropdown-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .desktop-menu .dropdown-content .dropdown-section h4 {
+            margin-top: 0;
+            color: #555;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+        .desktop-menu .dropdown-content .dropdown-section a {
+            color: #0b0829;
+            padding: 0.25rem 0;
+            border-radius: 0;
+            background: none;
+            transition: color 0.3s;
+            font-size: 0.98em;
+        }
+        .desktop-menu .dropdown-content .dropdown-section a:hover {
+            color: #ff8400;
+        }
+        .desktop-menu .dropdown-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .desktop-menu .dropdown:hover > .dropdown-content,
+        .desktop-menu .dropdown:hover > .dropdown-content-login {
+            display: block;
+        }
+        .desktop-menu .dropdown-content-login .dropdown-section a {
+            color: #0b0829;
+            padding: 0.3rem 0;
+            transition: color 0.3s;
+        }
+        .desktop-menu .dropdown-content-login .dropdown-section a:hover {
+            color: #ff8400;
+        }
+        .get-started-btn {
+            background: #fff;
+            color: #0b0829;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .get-started-btn:hover { background: #ececec; }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1002;
+        }
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100vw;
+            flex-direction: column;
+            background-color: #fff;
+            border-radius: 0;
+            padding: 1rem 0;
+            z-index: 2000;
+        }
+        .mobile-menu li { margin: 0; padding: 0.2rem 1.5rem; }
+        .mobile-menu a,
+        .mobile-menu .mobile-dropdown-btn {
+            color: #0b0829;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background: none;
+            border: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+        }
+        .mobile-menu a:hover,
+        .mobile-menu .mobile-dropdown-btn:hover {
+            background-color: rgba(11, 8, 41, 0.09);
+        }
+        .mobile-dropdown-content {
+            display: none;
+            flex-direction: column;
+            background: #f8f8fc;
+            border-radius: 10px;
+            margin: 0.3rem 0 0 0.5rem;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+        }
+        .mobile-dropdown.open .mobile-dropdown-content {
+            display: flex;
+        }
+        @media (max-width: 1024px) {
+            .desktop-menu { gap: 1rem; }
+        }
+        @media (max-width: 768px) {
+            .desktop-menu { display: none; }
+            .mobile-menu-btn { display: block; }
+            .mobile-menu {
+                display: none;
+                flex-direction: column;
+            }
+            .mobile-menu.active { display: flex; }
+            .nav-right { margin-left: auto; }
+        }
+        @media (min-width: 769px) {
+            .mobile-menu { display: none !important; }
+            .mobile-menu-btn { display: none !important; }
+        }
+        /* Hero Section */
+        .hero {
+            margin-top: 120px;
+            padding: 4rem 0;
+            background: linear-gradient(70deg, #f9dfc6 0%, #e9ecef 100%);
+        }
+        .hero-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 3rem;
+        }
+        .hero-content {
+            flex: 1 1 350px;
+            min-width: 300px;
+        }
+        .hero-content h1 {
+            font-size: 2.8rem;
+            color: #0b0829;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .hero-content p {
+            font-size: 1.18rem;
+            color: #555;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        .hero-content strong {
+            display: block;
+            margin: 1.5rem 0 0.5rem 0;
+            color: #ff8400;
+            font-size: 1.1rem;
+        }
+        .hero-img {
+            flex: 1 1 320px;
+            min-width: 260px;
+            text-align: center;
+        }
+        .hero-img img {
+            width: 100%;
+            max-width: 400px;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(11, 8, 41, 0.12);
+        }
+        @media (max-width: 900px) {
+            .hero-container { flex-direction: column; gap: 2rem; }
+            .hero-img img { max-width: 100%; }
+        }
+        @media (max-width: 600px) {
+            .hero-content h1 { font-size: 2rem; }
+            .hero-content p { font-size: 1rem; }
+        }
+        /* Advantage Section */
+        .advantage-section {
+            background: #f8f9fa;
+            padding: 4rem 0;
+        }
+        .advantage-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 3rem;
+        }
+        .advantage-content {
+            flex: 1 1 350px;
+            min-width: 300px;
+        }
+        .advantage-content h2 {
+            font-size: 2.2rem;
+            color: #0b0829;
+            margin-bottom: 1rem;
+        }
+        .advantage-content p {
+            font-size: 1.15rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        .advantage-content strong {
+            display: block;
+            margin: 1.5rem 0 0.5rem 0;
+            color: #ff8400;
+            font-size: 1.1rem;
+        }
+        .advantage-img {
+            flex: 1 1 320px;
+            min-width: 260px;
+            text-align: center;
+        }
+        .advantage-img img {
+            width: 100%;
+            max-width: 400px;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(11, 8, 41, 0.12);
+        }
+        @media (max-width: 900px) {
+            .advantage-container { flex-direction: column; gap: 2rem; }
+            .advantage-img img { max-width: 100%; }
+        }
+        @media (max-width: 600px) {
+            .advantage-content h2 { font-size: 1.5rem; }
+            .advantage-content p { font-size: 1rem; }
+        }
+        /* Contact Section */
+        .contact-section {
+            padding: 4rem 0;
+            background-color: #0b0829;
+            text-align: center;
+            color: white;
+        }
+        .contact-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        .contact-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .contact-btn {
+            background-color: #ff8400;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        .contact-btn:hover { background-color: #e67600; }
+        /* Footer */
+        .footer {
+            background-color: #0b0829;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-logo img {
+            width: 150px;
+            height: 120px;
+        }
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #ff8400;
+        }
+        .footer-section ul { list-style: none; }
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            padding: 0.25rem 0;
+        }
+        .footer-section a:hover { color: white; }
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-container">
+                <div class="nav-left">
+                    <a href="index.html" class="nav-logo">
+                        <img src="NAMBRI-logo-white-9.png" alt="Nambri Technologies Logo">
+                    </a>
+                    <!-- Desktop Menu -->
+                    <ul class="nav-menu desktop-menu" id="navMenuDesktop">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li class="dropdown">
+                            <a href="#">Products ⇩</a>
+                            <div class="dropdown-content">
+                                <div class="dropdown-grid">
+                                    <div class="dropdown-section">
+                                        <h4>Tax-XL</h4>
+                                        <a href="taxxl-overview.html"><strong>Overview</strong>
+                                            <br> Convert tax PDFs to Excel.</a>
+                                        <a href="taxxl-pricing.html"><strong>Pricing</strong>
+                                            <br> Plans for every business.</a>
+                                        <a href="taxxl-support.html"><strong>Support</strong>
+                                            <br> Help and resources.</a>
+                                    </div>
+                                    <div class="dropdown-section">
+                                        <h4>NuModel</h4>
+                                        <a href="numodel-overview.html"><strong>Overview</strong>
+                                            <br> Business valuation simplified.</a>
+                                    </div>
+                                    <div class="dropdown-section">
+                                        <h4>Custom Solutions</h4>
+                                        <a href="custom-solutions-overview.html"><strong>Overview</strong>
+                                            <br> Tailored IT for business.</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#">Login ⇩</a>
+                            <div class="dropdown-content-login">
+                                <div class="dropdown-section">
+                                    <a href="https://taxxl.nambri.com">Account</a>
+                                    <a href="taxxl-support.html">Support</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- Mobile Menu -->
+                    <ul class="nav-menu mobile-menu" id="navMenuMobile">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li class="mobile-dropdown">
+                            <button class="mobile-dropdown-btn" type="button">Products ⇩</button>
+                            <div class="mobile-dropdown-content">
+                                <div>
+                                    <strong>Tax-XL</strong>
+                                    <a href="taxxl-overview.html">Overview<br><small>Convert tax PDFs to Excel.</small></a>
+                                    <a href="taxxl-pricing.html">Pricing<br><small>Plans for every business.</small></a>
+                                    <a href="taxxl-support.html">Support<br><small>Help and resources.</small></a>
+                                </div>
+                                <div>
+                                    <strong>NuModel</strong>
+                                    <a href="numodel-overview.html">Overview<br><small>Business valuation simplified.</small></a>
+                                </div>
+                                <div>
+                                    <strong>Custom Solutions</strong>
+                                    <a href="custom-solutions-overview.html">Overview<br><small>Tailored IT for business.</small></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mobile-dropdown">
+                            <button class="mobile-dropdown-btn" type="button">Login ⇩</button>
+                            <div class="mobile-dropdown-content">
+                                <a href="https://taxxl.nambri.com">Account</a>
+                                <a href="taxxl-support.html">Support</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav-right">
+                    <a href="https://taxxl.nambri.com" class="get-started-btn">Get Started</a>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" type="button">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1>Custom Software Solutions.</h1>
+                    <p>
+                        Transforming Complexity into Simplicity
+                        <br><br>
+                        We offer a comprehensive suite of custom software development services tailored to your business needs. Partnering with accounting firms, law offices, and other professional service organizations, we create bespoke solutions that address your unique challenges. Our expertise lies in simplifying complex operations, crafting meaningful user experiences, and delivering scalable, sustainable business value through the design, development, and support of custom, commercial-grade software systems.
+                    </p>
+                    <strong>Contact us for your custom software development needs!</strong>
+                </div>
+                <div class="hero-img">
+                    <img src="https://images.squarespace-cdn.com/content/v1/5e2c8b1d7584647062207074/1720228645796-X84U3BS4V66QOHBGR4SM/image-asset.jpeg?format=2500w" alt="Custom software development">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantage Section -->
+    <section class="advantage-section">
+        <div class="container">
+            <div class="advantage-container">
+                <div class="advantage-img">
+                    <img src="https://images.squarespace-cdn.com/content/v1/5e2c8b1d7584647062207074/1720228581798-X0785ELIKW8HN4ANXQZV/image-asset.jpeg?format=2500w" alt="Nambri partnership">
+                </div>
+                <div class="advantage-content">
+                    <h2>Discover the Nambri Advantage</h2>
+                    <p>
+                        To truly harness the power of technology, businesses require a partnership rooted in commitment and insight. Nambri is your ideal ally. We prioritize the success of our clients, the satisfaction of their team, and the effectiveness of our solutions. Our approach is designed to achieve optimal outcomes that benefit everyone involved.
+                    </p>
+                    <strong>Choose Nambri and experience a unique partnership that drives success.</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <h2>Let's Build Something Great Together</h2>
+            <p>Ready to discuss your custom software project? Our team is here to help you achieve your business goals.</p>
+            <a href="contact.html" class="contact-btn">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <a href="index.html" class="footer-logo">
+                        <img src="NAMBRI-logo-white-9.png" alt="Nambri Technologies Logo">
+                    </a>
+                </div>
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="taxxl-overview.html">Tax-XL</a></li>
+                        <li><a href="numodel-overview.html">NuModel</a></li>
+                        <li><a href="custom-solutions-overview.html">Custom</a></li>
+                        <li><a href="taxxl-pricing.html">Pricing</a></li>
+                        <li><a href="taxxl-support.html">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navMenuMobile = document.getElementById('navMenuMobile');
+            navMenuMobile.classList.toggle('active');
+        }
+        function setupMobileDropdowns() {
+            document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const dropdown = this.parentElement;
+                    const openDropdowns = document.querySelectorAll('.mobile-dropdown.open');
+                    openDropdowns.forEach(d => {
+                        if (d !== dropdown) d.classList.remove('open');
+                    });
+                    dropdown.classList.toggle('open');
+                });
+            });
+            document.addEventListener('click', function(event) {
+                document.querySelectorAll('.mobile-dropdown.open').forEach(d => {
+                    if (!d.contains(event.target)) d.classList.remove('open');
+                });
+            });
+        }
+        document.getElementById('mobileMenuBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMobileMenu();
+            document.querySelectorAll('.mobile-dropdown').forEach(d => d.classList.remove('open'));
+        });
+        document.addEventListener('click', function(event) {
+            const navMenuMobile = document.getElementById('navMenuMobile');
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            if (!navMenuMobile.contains(event.target) && !mobileBtn.contains(event.target)) {
+                navMenuMobile.classList.remove('active');
+                document.querySelectorAll('.mobile-dropdown').forEach(d => d.classList.remove('open'));
+            }
+        });
+        document.getElementById('navMenuMobile').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+        setupMobileDropdowns();
+    </script>
+</body>
+</html>
+<!-- End of HTML Document -->

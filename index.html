@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nambri Technologies</title>
+    <link rel="icon" type="image/x-icon" href="https://images.squarespace-cdn.com/content/v1/5e2c8b1d7584647062207074/da05e036-edb7-410f-b886-4ad8ac36b606/favicon.ico?format=100w">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .nav {
+            background-color: #0b0829;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-logo img {
+            width: 110px;
+            height: 90px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-menu .desktop-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        .nav-menu .desktop-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- DESKTOP MENU --- */
+        .desktop-menu {
+            display: flex;
+            gap: 2rem;
+            background-color: #0b0829;
+            border-radius: 15px;
+            padding: 0.5rem 1rem;
+            list-style: none;
+            align-items: center;
+            position: relative;
+        }
+
+        .desktop-menu li {
+            position: relative;
+        }
+
+        .desktop-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            display: block;
+        }
+
+        .desktop-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .desktop-menu .dropdown-content,
+        .desktop-menu .dropdown-content-login {
+            display: none;
+            position: absolute;
+            top: 110%;
+            left: 0;
+            background: #fff;
+            color: #0b0829;
+            border-radius: 10px;
+            padding: 1rem;
+            z-index: 1001;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .desktop-menu .dropdown-content {
+            min-width: 720px;
+        }
+        .desktop-menu .dropdown-content-login {
+            min-width: 80px;
+        }
+
+        .desktop-menu .dropdown-content .dropdown-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .desktop-menu .dropdown-content .dropdown-section h4 {
+            margin-top: 0;
+            color: #555;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .desktop-menu .dropdown-content .dropdown-section a {
+            color: #0b0829;
+            padding: 0.25rem 0;
+            border-radius: 0;
+            background: none;
+            transition: color 0.3s;
+            font-size: 0.98em;
+        }
+
+        .desktop-menu .dropdown-content .dropdown-section a:hover {
+            color: #ff8400;
+        }
+
+        .desktop-menu .dropdown-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .desktop-menu .dropdown:hover > .dropdown-content,
+        .desktop-menu .dropdown:hover > .dropdown-content-login {
+            display: block;
+        }
+
+        .desktop-menu .dropdown-content-login .dropdown-section a {
+            color: #0b0829;
+            padding: 0.3rem 0;
+            transition: color 0.3s;
+        }
+
+        .desktop-menu .dropdown-content-login .dropdown-section a:hover {
+            color: #ff8400;
+        }
+
+        .get-started-btn {
+            background: #fff;
+            color: #0b0829;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .get-started-btn:hover {
+            background: #ececec;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100vw;
+            flex-direction: column;
+            background-color: #fff;
+            border-radius: 0;
+            padding: 1rem 0;
+            z-index: 2000;
+        }
+
+        .mobile-menu li {
+            margin: 0;
+            padding: 0.2rem 1.5rem;
+        }
+
+        .mobile-menu a,
+        .mobile-menu .mobile-dropdown-btn {
+            color: #0b0829;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background: none;
+            border: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu .mobile-dropdown-btn:hover {
+            background-color: rgba(11, 8, 41, 0.09);
+        }
+
+        .mobile-dropdown-content {
+            display: none;
+            flex-direction: column;
+            background: #f8f8fc;
+            border-radius: 10px;
+            margin: 0.3rem 0 0 0.5rem;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+        }
+
+        .mobile-dropdown.open .mobile-dropdown-content {
+            display: flex;
+        }
+
+        @media (max-width: 1024px) {
+            .desktop-menu {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .mobile-menu {
+                display: none;
+                flex-direction: column;
+            }
+            .mobile-menu.active {
+                display: flex;
+            }
+            .nav-right {
+                margin-left: auto;
+            }
+        }
+
+        /* Hide mobile menu by default on desktop */
+        @media (min-width: 769px) {
+            .mobile-menu {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: none !important;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 120px;
+            padding: 4rem 0;
+            background: linear-gradient(70deg, #f9dfc6 0%, #e9ecef 100%);
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .hero-images img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0b0829;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #ff8400;
+            color: white;
+            border: 2px solid transparent;
+            transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #f9dfc6;
+            color: #ff8400;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #ff8400;
+            border: 2px solid #ff8400;
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #ff8400;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Sticky Cards Section */
+        .products-section {
+            background-color: #8fa0d8;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .sticky-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s cubic-bezier(.55, .06, .68, .19), 
+            transform 0.8s cubic-bezier(.55, .06, .68, .19);
+            will-change: opacity, transform;
+        }
+        .product-card.visible {
+            opacity: 1;
+            transform: none;
+        }
+        .product-card:hover {
+            box-shadow: 0 8px 32px rgba(11, 8, 41, 0.22);
+            transform: translateY(-8px) scale(1.015);
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+        
+
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .product-info h3 {
+            color: #0b0829;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-info h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-info p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .product-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .product-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .product-buttons {
+                justify-content: center;
+            }
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background-color: #ff8400;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .faq-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 1rem;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            padding: 1.5rem 0;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 0 1.5rem 0;
+            line-height: 1.6;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s;
+        }
+
+        .faq-question.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 4rem 0;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #ff8400;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #0b0829;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo img {
+            width: 150px;
+            height: 120px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #ff8400;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            padding: 0.25rem 0;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-container">
+                <div class="nav-left">
+                    <a href="index.html" class="nav-logo">
+                        <img src="NAMBRI-logo-white-9.png" alt="Nambri Technologies Logo">
+                    </a>
+                    <!-- Desktop Menu -->
+                    <ul class="nav-menu desktop-menu" id="navMenuDesktop">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li class="dropdown">
+                            <a href="#">Products ⇩</a>
+                            <div class="dropdown-content">
+                                <div class="dropdown-grid">
+                                    <div class="dropdown-section">
+                                        <h4>Tax-XL</h4>
+                                        <a href="taxxl-overview.html"><strong>Overview</strong>
+                                            <br> Convert tax PDFs to Excel.</a>
+                                        <a href="taxxl-pricing.html"><strong>Pricing</strong>
+                                            <br> Plans for every business.</a>
+                                        <a href="taxxl-support.html"><strong>Support</strong>
+                                            <br> Help and resources.</a>
+                                    </div>
+                                    <div class="dropdown-section">
+                                        <h4>NuModel</h4>
+                                        <a href="numodel-overview.html"><strong>Overview</strong>
+                                            <br> Business valuation simplified.</a>
+                                    </div>
+                                    <div class="dropdown-section">
+                                        <h4>Custom Solutions</h4>
+                                        <a href="custom-solutions-overview.html"><strong>Overview</strong>
+                                            <br> Tailored IT for business.</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#">Login ⇩</a>
+                            <div class="dropdown-content-login">
+                                <div class="dropdown-section">
+                                    <a href="https://taxxl.nambri.com">Account</a>
+                                    <a href="taxxl-support.html">Support</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- Mobile Menu -->
+                    <ul class="nav-menu mobile-menu" id="navMenuMobile">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li class="mobile-dropdown">
+                            <button class="mobile-dropdown-btn" type="button">Products ⇩</button>
+                            <div class="mobile-dropdown-content">
+                                <div>
+                                    <strong>Tax-XL</strong>
+                                    <a href="taxxl-overview.html">Overview<br><small>Convert tax PDFs to Excel.</small></a>
+                                    <a href="taxxl-pricing.html">Pricing<br><small>Plans for every business.</small></a>
+                                    <a href="taxxl-support.html">Support<br><small>Help and resources.</small></a>
+                                </div>
+                                <div>
+                                    <strong>NuModel</strong>
+                                    <a href="numodel-overview.html">Overview<br><small>Business valuation simplified.</small></a>
+                                </div>
+                                <div>
+                                    <strong>Custom Solutions</strong>
+                                    <a href="custom-solutions-overview.html">Overview<br><small>Tailored IT for business.</small></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mobile-dropdown">
+                            <button class="mobile-dropdown-btn" type="button">Login ⇩</button>
+                            <div class="mobile-dropdown-content">
+                                <a href="https://taxxl.nambri.com">Account</a>
+                                <a href="taxxl-support.html">Support</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav-right">
+                    <a href="https://taxxl.nambri.com" class="get-started-btn">Get Started</a>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" type="button">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-container">
+                <div class="hero-images">
+                    <img src="image-asset-office.jpeg" alt="Busy office environment">
+                    <img src="image-asset-bg.jpeg" style="opacity: 0;" alt="">
+                    <img src="image-asset-bg.jpeg" style="opacity: 0;" alt="">
+                    <img src="image-asset-taxxl.jpeg" alt="Individual using productivity software">
+                </div>
+                <div class="hero-content">
+                    <h1>Welcome to Nambri Technologies</h1>
+                    <p>Streamline tax, valuation, and custom IT solutions.</p>
+                    <div class="button-group">
+                        <a href="about.html" class="btn btn-primary">About us</a>
+                        <a href="contact.html" class="btn btn-secondary">Contact us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Cards Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="sticky-cards">
+                <div class="product-card animate-on-scroll">
+                    <img src="image-asset-taxxl.jpeg" alt="Computer showcasing educational software">
+                    <div class="product-info">
+                        <h3>Nambri Tax-XL</h3>
+                        <h2>Convert tax PDFs to Excel fast</h2>
+                        <p>A cutting-edge resource designed to automate the conversion of PDF tax returns into Excel spreadsheets. Utilizing Nambri brings numerous advantages, including the elimination of manual data entry, enhanced accuracy, reduced errors, and heightened productivity.</p>
+                        <div class="product-buttons">
+                          <a href="taxxl-overview.html" class="btn btn-primary">About Tax-XL</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card animate-on-scroll">
+                    <img src="numodel.avif" alt="Business meeting">
+                    <div class="product-info">
+                        <h3>NuModel - Business Valuation Platform</h3>
+                        <h2>Estimate company value in minutes</h2>
+                        <p>State-of-the-art business valuation software offering a comprehensive suite of proven methods to help you generate professional valuations more efficiently. This software will streamline your valuation practice, enabling you to produce superior valuations in less time.</p>
+                        <div class="product-buttons">
+                          <a href="numodel-overview.html" class="btn btn-primary">About NuModel</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card animate-on-scroll">
+                    <img src="image-asset-custom.jpeg" alt="Mobile banking app interface">
+                    <div class="product-info">
+                        <h3>Customized Software Solutions</h3>
+                        <h2>Tailored software, real results</h2>
+                        <p>We streamline intricate processes, craft engaging user experiences, and provide scalable, lasting business value by designing, developing, and supporting custom, commercial-grade software systems. Reach out to us for your custom software development needs!</p>
+                        <div class="product-buttons">
+                            <a href="custom-solutions-overview.html" class="btn btn-primary">About Custom Solutions</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="faq-container">
+                <div class="faq-header">
+                    <h2>Answers to your top questions</h2>
+                    <p>Find quick solutions and essential info.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        How does your PDF to Excel tool work?
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        Our software converts tax PDF reports into fully editable Excel files in seconds. Upload your document, and the system automatically extracts and organizes the data for immediate use.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        What industries benefit from your products?
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        Our solutions are designed for accountants, finance professionals, business owners, investors, and consultants seeking efficient data management and business valuation tools.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Can I request a custom software solution?
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        Yes. We offer tailored IT solutions to meet unique business needs. Contact us to discuss your requirements and receive a personalized proposal.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Subscription Section -->
+    <section class="contact-section">
+    <div class="container">
+        <h2>Subscribe to Our Newsletter</h2>
+        <p>Sign up with your email address to receive news and updates.</p>
+        
+        <form name="submit-to-google-sheet" style="max-width: 500px; margin: 2rem auto;">
+        <input
+            name="email"
+            type="email"
+            placeholder="Your Email Address"
+            required
+            style="padding: 1rem; width: 100%; margin-bottom: 1rem; border-radius: 8px; border: 1px solid #ccc;"
+        />
+        <button
+            type="submit"
+            class="btn btn-primary"
+            style="width: 100%; padding: 1rem; border-radius: 8px; font-size: 1rem;"
+        >
+            Subscribe
+        </button>
+        <p id="newsletter-msg" style="margin-top: 1rem;"></p>
+        </form>
+    </div>
+    </section>
+
+    <!-- JS for form submission -->
+    <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycby55ntGtaiUtoWdzG6popckZ2xmkFmAxcb1ZinK9UsUfjg5duPSFmRHEy7d8JTCmi9wbQ/exec'; // ⬅️ Replace with your actual Apps Script URL
+    const form = document.forms['submit-to-google-sheet'];
+    const msg = document.getElementById('newsletter-msg');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        msg.innerHTML = 'Submitting...';
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(response => {
+            msg.style.color = 'green';
+            msg.innerHTML = 'Thanks for subscribing!';
+            setTimeout(() => {
+                msg.innerHTML = '';
+            }, 3000); // Clear message after 3 seconds
+            form.reset();
+        })
+        .catch(error => {
+            msg.style.color = 'red';
+            msg.innerHTML = 'Something went wrong. Please try again.';
+            console.error('Error!', error.message);
+        });
+    });
+    </script>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <a href="index.html" class="footer-logo">
+                        <img src="NAMBRI-logo-white-9.png" alt="Nambri Technologies Logo">
+                    </a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="taxxl-overview.html">Tax-XL</a></li>
+                        <li><a href="numodel-overview.html">NuModel</a></li>
+                        <li><a href="custom-solutions-overview.html">Custom</a></li>
+                        <li><a href="taxxl-pricing.html">Pricing</a></li>
+                        <li><a href="taxxl-support.html">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle open/close
+        function toggleMobileMenu() {
+            const navMenuMobile = document.getElementById('navMenuMobile');
+            navMenuMobile.classList.toggle('active');
+        }
+        // Toggle mobile dropdowns
+        function setupMobileDropdowns() {
+            document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const dropdown = this.parentElement;
+                    const openDropdowns = document.querySelectorAll('.mobile-dropdown.open');
+                    openDropdowns.forEach(d => {
+                        if (d !== dropdown) d.classList.remove('open');
+                    });
+                    dropdown.classList.toggle('open');
+                });
+            });
+            // Close mobile dropdowns on outside click
+            document.addEventListener('click', function(event) {
+                document.querySelectorAll('.mobile-dropdown.open').forEach(d => {
+                    if (!d.contains(event.target)) d.classList.remove('open');
+                });
+            });
+        }
+        document.getElementById('mobileMenuBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMobileMenu();
+            // Close any open dropdowns when opening the menu
+            document.querySelectorAll('.mobile-dropdown').forEach(d => d.classList.remove('open'));
+        });
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navMenuMobile = document.getElementById('navMenuMobile');
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            if (!navMenuMobile.contains(event.target) && !mobileBtn.contains(event.target)) {
+                navMenuMobile.classList.remove('active');
+                // Also close all dropdowns
+                document.querySelectorAll('.mobile-dropdown').forEach(d => d.classList.remove('open'));
+            }
+        });
+        // Prevent menu click from closing itself
+        document.getElementById('navMenuMobile').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+        setupMobileDropdowns();
+
+        // Sticky cards animation
+        // Анімувати .product-card при появі у viewport
+        function animateOnScroll() {
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 80) {
+                    card.classList.add('visible');
+                }
+            });
+        }
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('DOMContentLoaded', animateOnScroll);
+
+        // FAQ toggle
+        function toggleFAQ(button) {
+            const answer = button.nextElementSibling;
+            const isActive = answer.classList.contains('active');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-answer').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelectorAll('.faq-question').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                answer.classList.add('active');
+                button.classList.add('active');
+            }
+        }
+
+    </script>
+</body>
+</html>
+<!-- End of HTML Document -->
+<!-- This HTML document is a complete webpage for Nambri Technologies, featuring a navigation bar, hero section, product cards, FAQ section, contact information, and footer. The design is responsive and includes interactive elements like dropdown menus and FAQ toggles. -->

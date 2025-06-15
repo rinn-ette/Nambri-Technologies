@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Nambri Technologies</title>
+    <link rel="icon" type="image/x-icon" href="https://images.squarespace-cdn.com/content/v1/5e2c8b1d7584647062207074/da05e036-edb7-410f-b886-4ad8ac36b606/favicon.ico?format=100w">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation - скопійовано з оригінального дизайну */
+        .nav {
+            background-color: #0b0829;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-logo img {
+            width: 110px;
+            height: 90px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .desktop-menu {
+            display: flex;
+            gap: 2rem;
+            background-color: #0b0829;
+            border-radius: 15px;
+            padding: 0.5rem 1rem;
+            list-style: none;
+            align-items: center;
+            position: relative;
+        }
+
+        .desktop-menu li {
+            position: relative;
+        }
+
+        .desktop-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            display: block;
+        }
+
+        .desktop-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .desktop-menu .dropdown-content,
+        .desktop-menu .dropdown-content-login {
+            display: none;
+            position: absolute;
+            top: 110%;
+            left: 0;
+            background: #fff;
+            color: #0b0829;
+            border-radius: 10px;
+            padding: 1rem;
+            z-index: 1001;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .desktop-menu .dropdown-content {
+            min-width: 720px;
+        }
+        .desktop-menu .dropdown-content-login {
+            min-width: 80px;
+        }
+
+        .desktop-menu .dropdown-content .dropdown-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .desktop-menu .dropdown-content .dropdown-section h4 {
+            margin-top: 0;
+            color: #555;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .desktop-menu .dropdown-content .dropdown-section a {
+            color: #0b0829;
+            padding: 0.25rem 0;
+            border-radius: 0;
+            background: none;
+            transition: color 0.3s;
+            font-size: 0.98em;
+        }
+
+        .desktop-menu .dropdown-content .dropdown-section a:hover {
+            color: #ff8400;
+        }
+
+        .desktop-menu .dropdown-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .desktop-menu .dropdown:hover > .dropdown-content,
+        .desktop-menu .dropdown:hover > .dropdown-content-login {
+            display: block;
+        }
+
+        .desktop-menu .dropdown-content-login .dropdown-section a {
+            color: #0b0829;
+            padding: 0.3rem 0;
+            transition: color 0.3s;
+        }
+
+        .desktop-menu .dropdown-content-login .dropdown-section a:hover {
+            color: #ff8400;
+        }
+
+        .get-started-btn {
+            background: #fff;
+            color: #0b0829;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .get-started-btn:hover {
+            background: #ececec;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100vw;
+            flex-direction: column;
+            background-color: #fff;
+            border-radius: 0;
+            padding: 1rem 0;
+            z-index: 2000;
+        }
+
+        .mobile-menu li {
+            margin: 0;
+            padding: 0.2rem 1.5rem;
+        }
+
+        .mobile-menu a,
+        .mobile-menu .mobile-dropdown-btn {
+            color: #0b0829;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background: none;
+            border: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu .mobile-dropdown-btn:hover {
+            background-color: rgba(11, 8, 41, 0.09);
+        }
+
+        .mobile-dropdown-content {
+            display: none;
+            flex-direction: column;
+            background: #f8f8fc;
+            border-radius: 10px;
+            margin: 0.3rem 0 0 0.5rem;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+        }
+
+        .mobile-dropdown.open .mobile-dropdown-content {
+            display: flex;
+        }
+
+        @media (max-width: 1024px) {
+            .desktop-menu {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .mobile-menu {
+                display: none;
+                flex-direction: column;
+            }
+            .mobile-menu.active {
+                display: flex;
+            }
+            .nav-right {
+                margin-left: auto;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: none !important;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 120px;
+            padding: 4rem 0;
+            background: linear-gradient(70deg, #f9dfc6 0%, #e9ecef 100%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0b0829;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        /* Forms Section */
+        .forms-section {
+            padding: 4rem 0;
+            background-color: #f8f9fa;
+        }
+
+        .forms-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .form-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .form-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-card h2 {
+            color: #0b0829;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .webinar-info {
+            background-color: #8fa0d8;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .webinar-info h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .webinar-info p {
+            margin: 0.5rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #0b0829;
+            font-weight: 500;
+        }
+
+        .required {
+            color: #ff8400;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff8400;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #ff8400;
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary:hover {
+            background-color: #f9dfc6;
+            color: #ff8400;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+        .btn-full:active {
+            transform: scale(0.97);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .forms-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #0b0829;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo img {
+            width: 150px;
+            height: 120px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #ff8400;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            padding: 0.25rem 0;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-container">
+                <div class="nav-left">
+                    <a href="index.html" class="nav-logo">
+                        <img src="NAMBRI-logo-white-9.png" alt="Nambri Technologies Logo">
+                    </a>
+                    <!-- Desktop Menu -->
+                    <ul class="nav-menu desktop-menu" id="navMenuDesktop">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li class="dropdown">
+                            <a href="#">Products ⇩</a>
+                            <div class="dropdown-content">
+                                <div class="dropdown-grid">
+                                    <div class="dropdown-section">
+                                        <h4>Tax-XL</h4>
+                                        <a href="taxxl-overview.html"><strong>Overview</strong>
+                                            <br> Convert tax PDFs to Excel.</a>
+                                        <a href="taxxl-pricing.html"><strong>Pricing</strong>
+                                            <br> Plans for every business.</a>
+                                        <a href="taxxl-support.html"><strong>Support</strong>
+                                            <br> Help and resources.</a>
+                                    </div>
+                                    <div class="dropdown-section">
+                                        <h4>NuModel</h4>
+                                        <a href="numodel-overview.html"><strong>Overview</strong>
+                                            <br> Business valuation simplified.</a>
+                                    </div>
+                                    <div class="dropdown-section">
+                                        <h4>Custom Solutions</h4>
+                                        <a href="custom-solutions-overview.html"><strong>Overview</strong>
+                                            <br> Tailored IT for business.</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#">Login ⇩</a>
+                            <div class="dropdown-content-login">
+                                <div class="dropdown-section">
+                                    <a href="https://taxxl.nambri.com">Account</a>
+                                    <a href="taxxl-support.html">Support</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- Mobile Menu -->
+                    <ul class="nav-menu mobile-menu" id="navMenuMobile">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li class="mobile-dropdown">
+                            <button class="mobile-dropdown-btn" type="button">Products ⇩</button>
+                            <div class="mobile-dropdown-content">
+                                <div>
+                                    <strong>Tax-XL</strong>
+                                    <a href="taxxl-overview.html">Overview<br><small>Convert tax PDFs to Excel.</small></a>
+                                    <a href="taxxl-pricing.html">Pricing<br><small>Plans for every business.</small></a>
+                                    <a href="taxxl-support.html">Support<br><small>Help and resources.</small></a>
+                                </div>
+                                <div>
+                                    <strong>NuModel</strong>
+                                    <a href="numodel-overview.html">Overview<br><small>Business valuation simplified.</small></a>
+                                </div>
+                                <div>
+                                    <strong>Custom Solutions</strong>
+                                    <a href="custom-solutions-overview.html">Overview<br><small>Tailored IT for business.</small></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mobile-dropdown">
+                            <button class="mobile-dropdown-btn" type="button">Login ⇩</button>
+                            <div class="mobile-dropdown-content">
+                                <a href="https://taxxl.nambri.com">Account</a>
+                                <a href="taxxl-support.html">Support</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav-right">
+                    <a href="https://taxxl.nambri.com" class="get-started-btn">Get Started</a>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" type="button">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Contact</h1>
+            <p>Get in touch with us for webinar registration or schedule a free demo</p>
+        </div>
+    </section>
+
+    <!-- Forms Section -->
+    <section class="forms-section">
+        <div class="container">
+            <div class="forms-container">
+                <!-- Webinar Registration Form -->
+                <div class="form-card">
+                    <h2>Webinar Registration</h2>
+                    <div class="webinar-info">
+                        <h3>Webinar Details</h3>
+                        <p><strong>When:</strong> March 18th</p>
+                        <p><strong>Time:</strong> 1 pm - 2 pm</p>
+                        <p><strong>Where:</strong> Zoom</p>
+                    </div>
+                    
+                    <form id="webinarForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="webinar-firstname">First Name <span class="required">*</span></label>
+                                <input type="text" id="webinar-firstname" name="firstname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="webinar-lastname">Last Name <span class="required">*</span></label>
+                                <input type="text" id="webinar-lastname" name="lastname" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="webinar-email">Email <span class="required">*</span></label>
+                            <input type="email" id="webinar-email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="webinar-phone">Phone <span class="required">*</span></label>
+                            <input type="tel" id="webinar-phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="webinar-company">Company Name <span class="required">*</span></label>
+                            <input type="text" id="webinar-company" name="company" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="webinar-qa">Q&A</label>
+                            <textarea id="webinar-qa" name="qa" placeholder="Any questions or topics you'd like us to cover?"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-full">Submit</button>
+                    </form>
+                </div>
+
+                <!-- Contact/Demo Form -->
+                <div class="form-card">
+                    <h2>Contact Us | Schedule Free Demo</h2>
+                    
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-firstname">First Name <span class="required">*</span></label>
+                                <input type="text" id="contact-firstname" name="firstname" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-lastname">Last Name <span class="required">*</span></label>
+                                <input type="text" id="contact-lastname" name="lastname" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-email">Email <span class="required">*</span></label>
+                            <input type="email" id="contact-email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-phone">Phone <span class="required">*</span></label>
+                            <input type="tel" id="contact-phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-company">Company Name <span class="required">*</span></label>
+                            <input type="text" id="contact-company" name="company" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-message">Message <span class="required">*</span></label>
+                            <textarea id="contact-message" name="message" placeholder="Tell us about your needs or request a demo..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-full">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <a href="index.html" class="footer-logo">
+                        <img src="NAMBRI-logo-white-9.png" alt="Nambri Technologies Logo">
+                    </a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="taxxl-overview.html">Tax-XL</a></li>
+                        <li><a href="numodel-overview.html">NuModel</a></li>
+                        <li><a href="custom-solutions-overview.html">Custom</a></li>
+                        <li><a href="taxxl-pricing.html">Pricing</a></li>
+                        <li><a href="taxxl-support.html">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality - copied from original
+        function toggleMobileMenu() {
+            const navMenuMobile = document.getElementById('navMenuMobile');
+            navMenuMobile.classList.toggle('active');
+        }
+
+        function setupMobileDropdowns() {
+            document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const dropdown = this.parentElement;
+                    const openDropdowns = document.querySelectorAll('.mobile-dropdown.open');
+                    openDropdowns.forEach(d => {
+                        if (d !== dropdown) d.classList.remove('open');
+                    });
+                    dropdown.classList.toggle('open');
+                });
+            });
+
+            document.addEventListener('click', function(event) {
+                document.querySelectorAll('.mobile-dropdown.open').forEach(d => {
+                    if (!d.contains(event.target)) d.classList.remove('open');
+                });
+            });
+        }
+
+        document.getElementById('mobileMenuBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMobileMenu();
+            document.querySelectorAll('.mobile-dropdown').forEach(d => d.classList.remove('open'));
+        });
+
+        document.addEventListener('click', function(event) {
+            const navMenuMobile = document.getElementById('navMenuMobile');
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            if (!navMenuMobile.contains(event.target) && !mobileBtn.contains(event.target)) {
+                navMenuMobile.classList.remove('active');
+                document.querySelectorAll('.mobile-dropdown').forEach(d => d.classList.remove('open'));
+            }
+        });
+
+        document.getElementById('navMenuMobile').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        setupMobileDropdowns();
+
+        // Form submission handlers
+        //document.getElementById('webinarForm').addEventListener('submit', function(e) {
+          //  e.preventDefault();
+            //alert('Thank you for registering for the webinar! You will receive a confirmation email shortly.');
+        //});
+
+        //document.getElementById('contactForm').addEventListener('submit', function(e) {
+         //   e.preventDefault();
+         //   alert('Thank you for your message! We will get back to you within 24 hours.');
+        //});
+
+        
+        // script URLs
+        const webinarScriptURL = 'https://script.google.com/macros/s/AKfycbx2rtXg0ueYq7cfxN5Rs1wxWBVXzl8b4j74FnuF77fGl0p2M7SfZnovDQyvSxuz8Wvc/exec';
+        const contactScriptURL = 'https://script.google.com/macros/s/AKfycbwkR-w-yd1RtU9rZkf5aT0cG7IKrBoECLmkYgjr1rkmHGbwGlGQzyAwr49faLEeP4W3/exec';
+
+        const webinarForm = document.getElementById('webinarForm');
+        const contactForm = document.getElementById('contactForm');
+
+        webinarForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            fetch(webinarScriptURL, {
+            method: 'POST',
+            body: new FormData(webinarForm)
+            })
+            .then(response => {
+            alert('Thank you for registering! Confirmation email will follow.');
+            webinarForm.reset();
+            })
+            .catch(error => {
+            alert('There was an error. Please try again.');
+            console.error('Error!', error.message);
+            });
+        });
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            fetch(contactScriptURL, {
+            method: 'POST',
+            body: new FormData(contactForm)
+            })
+            .then(response => {
+            alert('Thanks for contacting us! We’ll get back within 24 hours.');
+            contactForm.reset();
+            })
+            .catch(error => {
+            alert('There was an error. Please try again.');
+            console.error('Error!', error.message);
+            });
+        });
+
+    </script>
+</body>
+</html>
+<!-- End of contact.html -->

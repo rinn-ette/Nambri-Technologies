@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaxXL Support - Nambri Technologies</title>
+    <link rel="icon" type="image/x-icon" href="https://images.squarespace-cdn.com/content/v1/5e2c8b1d7584647062207074/da05e036-edb7-410f-b886-4ad8ac36b606/favicon.ico?format=100w">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation - identical to main page */
+        .nav {
+            background-color: #0b0829;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-logo img {
+            width: 110px;
+            height: 90px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-menu .desktop-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        .nav-menu .desktop-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Desktop Menu */
+        .desktop-menu {
+            display: flex;
+            gap: 2rem;
+            background-color: #0b0829;
+            border-radius: 15px;
+            padding: 0.5rem 1rem;
+            list-style: none;
+            align-items: center;
+            position: relative;
+        }
+
+        .desktop-menu li {
+            position: relative;
+        }
+
+        .desktop-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            display: block;
+        }
+
+        .desktop-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .desktop-menu .dropdown-content,
+        .desktop-menu .dropdown-content-login {
+            display: none;
+            position: absolute;
+            top: 110%;
+            left: 0;
+            background: #fff;
+            color: #0b0829;
+            border-radius: 10px;
+            padding: 1rem;
+            z-index: 1001;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .desktop-menu .dropdown-content {
+            min-width: 720px;
+        }
+        .desktop-menu .dropdown-content-login {
+            min-width: 80px;
+        }
+
+        .desktop-menu .dropdown-content .dropdown-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .desktop-menu .dropdown-content .dropdown-section h4 {
+            margin-top: 0;
+            color: #555;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .desktop-menu .dropdown-content .dropdown-section a {
+            color: #0b0829;
+            padding: 0.25rem 0;
+            border-radius: 0;
+            background: none;
+            transition: color 0.3s;
+            font-size: 0.98em;
+        }
+
+        .desktop-menu .dropdown-content .dropdown-section a:hover {
+            color: #ff8400;
+        }
+
+        .desktop-menu .dropdown-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .desktop-menu .dropdown:hover > .dropdown-content,
+        .desktop-menu .dropdown:hover > .dropdown-content-login {
+            display: block;
+        }
+
+        .desktop-menu .dropdown-content-login .dropdown-section a {
+            color: #0b0829;
+            padding: 0.3rem 0;
+            transition: color 0.3s;
+        }
+
+        .desktop-menu .dropdown-content-login .dropdown-section a:hover {
+            color: #ff8400;
+        }
+
+        .get-started-btn {
+            background: #fff;
+            color: #0b0829;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .get-started-btn:hover {
+            background: #ececec;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100vw;
+            flex-direction: column;
+            background-color: #fff;
+            border-radius: 0;
+            padding: 1rem 0;
+            z-index: 2000;
+        }
+
+        .mobile-menu li {
+            margin: 0;
+            padding: 0.2rem 1.5rem;
+        }
+
+        .mobile-menu a,
+        .mobile-menu .mobile-dropdown-btn {
+            color: #0b0829;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background: none;
+            border: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        .mobile-menu a:hover,
+        .mobile-menu .mobile-dropdown-btn:hover {
+            background-color: rgba(11, 8, 41, 0.09);
+        }
+
+        .mobile-dropdown-content {
+            display: none;
+            flex-direction: column;
+            background: #f8f8fc;
+            border-radius: 10px;
+            margin: 0.3rem 0 0 0.5rem;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
+        }
+
+        .mobile-dropdown.open .mobile-dropdown-content {
+            display: flex;
+        }
+
+        @media (max-width: 1024px) {
+            .desktop-menu {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .mobile-menu {
+                display: none;
+                flex-direction: column;
+            }
+            .mobile-menu.active {
+                display: flex;
+            }
+            .nav-right {
+                margin-left: auto;
+            }
+        }
+
+        /* Hide mobile menu by default on desktop */
+        @media (min-width: 769px) {
+            .mobile-menu {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: none !important;
+            }
+        }
+
+        /* Support Page Specific Styles */
+        .support-section {
+            margin-top: 120px;
+            padding: 4rem 0;
+            background: linear-gradient(70deg, #f9dfc6 0%, #e9ecef 100%);
+            min-height: 70vh;
+        }
+
+        .support-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 8px 32px rgba(11, 8, 41, 0.1);
+        }
+
+        .support-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .support-header h1 {
+            font-size: 2.5rem;
+            color: #0b0829;
+            margin-bottom: 1rem;
+        }
+
+        .support-header p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .support-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: #0b0829;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group.required label::after {
+            content: " *";
+            color: #ff8400;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff8400;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .name-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .contact-method-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .submit-btn {
+            background-color: #ff8400;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            justify-self: center;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background-color: #e67600;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.97);
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            background-color: #f9dfc6;
+            color: #ff8400;
+        }
+
+        @media (max-width: 768px) {
+            .support-container {
+                margin: 0 20px;
+                padding: 2rem;
+            }
+
+            .support-header h1 {
+                font-size: 2rem;
+            }
+
+            .name-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Footer - identical to main page */
+        .footer {
+            background-color: #0b0829;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo img {
+            width: 150px;
+            height: 120px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #ff8400;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            padding: 0.25rem 0;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-container">
+                <div class="nav-left">
+                    <a href="index.html" class="nav-logo">
+                        <img src="NAMBRI-logo-white-9.png" alt="Nambri Technologies Logo">
+                    </a>
+                    <!-- Desktop Menu -->
+                    <ul class="nav-menu desktop-menu" id="navMenuDesktop">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li class="dropdown">
+                            <a href="#">Products ⇩</a>
+                            <div class="dropdown-content">
+                                <div class="dropdown-grid">
+                                    <div class="dropdown-section">
+                                        <h4>Tax-XL</h4>
+                                        <a href="taxxl-overview.html"><strong>Overview</strong>
+                                            <br> Convert tax PDFs to Excel.</a>
+                                        <a href="taxxl-pricing.html"><strong>Pricing</strong>
+                                            <br> Plans for every business.</a>
+                                        <a href="taxxl-support.html"><strong>Support</strong>
+                                            <br> Help and resources.</a>
+                                    </div>
+                                    <div class="dropdown-section">
+                                        <h4>NuModel</h4>
+                                        <a href="numodel-overview.html"><strong>Overview</strong>
+                                            <br> Business valuation simplified.</a>
+                                    </div>
+                                    <div class="dropdown-section">
+                                        <h4>Custom Solutions</h4>
+                                        <a href="custom-solutions-overview.html"><strong>Overview</strong>
+                                            <br> Tailored IT for business.</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#">Login ⇩</a>
+                            <div class="dropdown-content-login">
+                                <div class="dropdown-section">
+                                    <a href="https://taxxl.nambri.com">Account</a>
+                                    <a href="taxxl-support.html">Support</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- Mobile Menu -->
+                    <ul class="nav-menu mobile-menu" id="navMenuMobile">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li class="mobile-dropdown">
+                            <button class="mobile-dropdown-btn" type="button">Products ⇩</button>
+                            <div class="mobile-dropdown-content">
+                                <div>
+                                    <strong>Tax-XL</strong>
+                                    <a href="taxxl-overview.html">Overview<br><small>Convert tax PDFs to Excel.</small></a>
+                                    <a href="taxxl-pricing.html">Pricing<br><small>Plans for every business.</small></a>
+                                    <a href="taxxl-support.html">Support<br><small>Help and resources.</small></a>
+                                </div>
+                                <div>
+                                    <strong>NuModel</strong>
+                                    <a href="numodel-overview.html">Overview<br><small>Business valuation simplified.</small></a>
+                                </div>
+                                <div>
+                                    <strong>Custom Solutions</strong>
+                                    <a href="custom-solutions-overview.html">Overview<br><small>Tailored IT for business.</small></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mobile-dropdown">
+                            <button class="mobile-dropdown-btn" type="button">Login ⇩</button>
+                            <div class="mobile-dropdown-content">
+                                <a href="https://taxxl.nambri.com">Account</a>
+                                <a href="taxxl-support.html">Support</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav-right">
+                    <a href="https://taxxl.nambri.com" class="get-started-btn">Get Started</a>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" type="button">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Support Section -->
+    <section class="support-section">
+        <div class="container">
+            <div class="support-container">
+                <div class="support-header">
+                    <h1>Help Center</h1>
+                    <p>Please complete the form below</p>
+                </div>
+                
+                <form class="support-form" name="support-form">
+                    <div class="form-group required">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="company">Company Name</label>
+                        <input type="text" id="company" name="company" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label>Name</label>
+                        <div class="name-group">
+                            <div>
+                                <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+                            </div>
+                            <div>
+                                <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Please provide description" required></textarea>
+                    </div>
+
+                    <div class="form-group required contact-method-group">
+                        <label>Preferred Contact Method</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="contactPhone" name="contactMethod" value="phone">
+                            <label for="contactPhone">Phone</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="contactEmail" name="contactMethod" value="email">
+                            <label for="contactEmail">Email</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <a href="index.html" class="footer-logo">
+                        <img src="NAMBRI-logo-white-9.png" alt="Nambri Technologies Logo">
+                    </a>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="taxxl-overview.html">Tax-XL</a></li>
+                        <li><a href="numodel-overview.html">NuModel</a></li>
+                        <li><a href="custom-solutions-overview.html">Custom</a></li>
+                        <li><a href="taxxl-pricing.html">Pricing</a></li>
+                        <li><a href="taxxl-support.html">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navMenuMobile = document.getElementById('navMenuMobile');
+            navMenuMobile.classList.toggle('active');
+        }
+
+        function setupMobileDropdowns() {
+            document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const dropdown = this.parentElement;
+                    const openDropdowns = document.querySelectorAll('.mobile-dropdown.open');
+                    openDropdowns.forEach(d => {
+                        if (d !== dropdown) d.classList.remove('open');
+                    });
+                    dropdown.classList.toggle('open');
+                });
+            });
+
+            document.addEventListener('click', function(event) {
+                document.querySelectorAll('.mobile-dropdown.open').forEach(d => {
+                    if (!d.contains(event.target)) d.classList.remove('open');
+                });
+            });
+        }
+
+        document.getElementById('mobileMenuBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMobileMenu();
+            document.querySelectorAll('.mobile-dropdown').forEach(d => d.classList.remove('open'));
+        });
+
+        document.addEventListener('click', function(event) {
+            const navMenuMobile = document.getElementById('navMenuMobile');
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            if (!navMenuMobile.contains(event.target) && !mobileBtn.contains(event.target)) {
+                navMenuMobile.classList.remove('active');
+                document.querySelectorAll('.mobile-dropdown').forEach(d => d.classList.remove('open'));
+            }
+        });
+
+        document.getElementById('navMenuMobile').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        setupMobileDropdowns();
+
+        // Form validation
+        //document.forms['support-form'].addEventListener('submit', function(e) {
+        //    e.preventDefault();
+        //    
+            // Check if at least one contact method is selected
+        //    const contactMethods = document.querySelectorAll('input[name="contactMethod"]:checked');
+        //    if (contactMethods.length === 0) {
+        //        alert('Please select at least one preferred contact method.');
+        //        return;
+        //    }
+            
+            // Here you would typically send the form data to a server
+        //    alert('Thank you for your submission! We will contact you soon.');
+        //    this.reset();
+        //});
+
+        const supportForm = document.forms['support-form'];
+        const supportScriptURL = 'https://script.google.com/macros/s/AKfycbxTPSKWCKdcGuDUOzb_7wxragdh6-YT04oVo6NF-26OQ5zHmMN4IXIMJGT0gUqYaQNB/exec'; // URL
+
+        supportForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const contactMethods = document.querySelectorAll('input[name="contactMethod"]:checked');
+            if (contactMethods.length === 0) {
+            alert('Please select at least one preferred contact method.');
+            return;
+            }
+
+            // Створити новий FormData і об'єднати значення чекбоксів
+            const formData = new FormData(supportForm);
+            const selectedMethods = Array.from(contactMethods).map(cb => cb.value).join(', ');
+            formData.set('contactMethod', selectedMethods); // важливо!
+
+            fetch(supportScriptURL, {
+            method: 'POST',
+            body: formData
+            })
+            .then(response => {
+                alert('Thank you for your submission! We will contact you soon.');
+                supportForm.reset();
+            })
+            .catch(error => {
+                alert('There was an error submitting the form.');
+                console.error('Error!', error.message);
+            });
+        });
+
+    </script>
+</body>
+</html>
+<!-- End of HTML Document -->
