@@ -131,10 +131,28 @@
             flex-direction: column;
             gap: 0.2rem;
         }
-        .desktop-menu .dropdown:hover > .dropdown-content,
+        /*.desktop-menu .dropdown:hover > .dropdown-content,
         .desktop-menu .dropdown:hover > .dropdown-content-login {
             display: block;
+        }*/
+        .desktop-menu .dropdown.active > .dropdown-content,
+        .desktop-menu .dropdown.active > .dropdown-content-login {
+            display: block;
         }
+        .desktop-menu .dropdown-content,
+        .desktop-menu .dropdown-content-login {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+        }
+        .desktop-menu .dropdown.active > .dropdown-content,
+        .desktop-menu .dropdown.active > .dropdown-content-login {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
         .desktop-menu .dropdown-content-login .dropdown-section a {
             color: #0b0829;
             padding: 0.3rem 0;
@@ -837,6 +855,42 @@
             e.stopPropagation();
         });
         setupMobileDropdowns();
+
+        // Налаштування desktop dropdown меню
+        function setupDesktopDropdowns() {
+            const dropdownItems = document.querySelectorAll('.desktop-menu .dropdown');
+            
+            dropdownItems.forEach(dropdown => {
+                const dropdownLink = dropdown.querySelector('a');
+                
+                dropdownLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Закриваємо інші dropdown
+                    dropdownItems.forEach(item => {
+                        if (item !== dropdown) {
+                            item.classList.remove('active');
+                        }
+                    });
+                    
+                    // Перемикаємо поточний dropdown
+                    dropdown.classList.toggle('active');
+                });
+            });
+        }
+
+        // Закриття dropdown при кліку поза ними
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.desktop-menu .dropdown')) {
+                document.querySelectorAll('.desktop-menu .dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+
+        // Ініціалізація
+        setupDesktopDropdowns();
     </script>
 </body>
 </html>
