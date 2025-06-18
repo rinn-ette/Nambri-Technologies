@@ -276,6 +276,9 @@
             .mobile-menu {
                 display: none;
                 flex-direction: column;
+                max-height: calc(100vh - 128.26px);
+                overflow-y: auto;
+                overscroll-behavior: contain;
             }
             .mobile-menu.active {
                 display: flex;
